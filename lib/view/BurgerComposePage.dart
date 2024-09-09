@@ -19,11 +19,10 @@ class BurgerComposer extends StatelessWidget {
           burgerCount: orderVM.order?.burgers.length ?? 0,
           amount: 2, // Update with actual amount
           onOrderPressed: () {
-              // This is the onSuccess lambda that gets called when the order is created
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => BurgerOrderV()),
-              );
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => BurgerOrderV()),
+            );
           },
         ),
         body: Center(
@@ -34,54 +33,60 @@ class BurgerComposer extends StatelessWidget {
               children: [
                 // Cook Level Selection
                 Text(
-                    AppStrings.selectSteackWeight,
+                  AppStrings.selectSteackWeight,
                   style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: orderVM.ingredients?.steacks?.map((steack) {
-                        return ChoiceChip(
-                          label: Text(steack.name ?? ""),
-                          selected:
-                              orderVM.currentBurger?.steack?.id == steack.id,
-                          onSelected: (bool selected) {
-                            if (selected) {
-                              orderVM.currentBurger?.steack = steack;
-                              orderVM.notifyListeners();
-                            }
-                          },
-                        );
-                    }).toList() ?? [],
-                  ),
-                  SizedBox(height: 20),
-                  Text(
-                    AppStrings.selectCookLevel,
-                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                    return ChoiceChip(
+                      avatar: steack.image != null
+                          ? Image.network(
+                        steack.image!,
+                        width: 50,
+                        height: 50,
+                      )
+                          : null, // Display image if available
+                      label: Text(steack.name ?? ""),
+                      selected:
+                      orderVM.currentBurger?.steack?.id == steack.id,
+                      onSelected: (bool selected) {
+                        if (selected) {
+                          orderVM.currentBurger?.steack = steack;
+                          orderVM.notifyListeners();
+                        }
+                      },
+                    );
+                  }).toList() ?? [],
+                ),
+                SizedBox(height: 20),
+                Text(
+                  AppStrings.selectCookLevel,
+                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: orderVM.ingredients?.cookLevels?.map((cookLevel) {
-                        return ChoiceChip(
-                          label: Text(cookLevel.name ?? ""),
-                          selected: orderVM.currentBurger?.cookLevel?.id ==
-                              cookLevel.id,
-                          onSelected: (bool selected) {
-                            if (selected) {
-                              orderVM.currentBurger?.cookLevel = cookLevel;
-                              orderVM.notifyListeners();
-                            }
-                          },
-                        selectedColor: AppColors.primary, // Use primary color
-                        disabledColor: AppColors.secondary, // Use secondary color
-                        );
-                      }).toList() ??
-                      [],
+                    return ChoiceChip(
+                      label: Text(cookLevel.name ?? ""),
+                      selected: orderVM.currentBurger?.cookLevel?.id ==
+                          cookLevel.id,
+                      onSelected: (bool selected) {
+                        if (selected) {
+                          orderVM.currentBurger?.cookLevel = cookLevel;
+                          orderVM.notifyListeners();
+                        }
+                      },
+                      selectedColor: AppColors.primary,
+                      disabledColor: AppColors.secondary,
+                    );
+                  }).toList() ?? [],
                 ),
                 SizedBox(height: 20),
 
                 // Toppings Selection (GridView)
                 Text(
-                    AppStrings.chooseToppings,
+                  AppStrings.chooseToppings,
                   style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                 ),
                 GridView.count(
@@ -89,31 +94,37 @@ class BurgerComposer extends StatelessWidget {
                   crossAxisCount: 3,
                   childAspectRatio: 3,
                   children: orderVM.ingredients?.toppings!.map((topping) {
-                        return FilterChip(
-                          label: Text(topping.name ?? ""),
-                          selected: orderVM.currentBurger?.toppings
-                                  ?.any((t) => t.id == topping.id) ??
-                              false,
-                          onSelected: (bool selected) {
-                            if (selected) {
-                              orderVM.currentBurger?.toppings?.add(topping);
-                            } else {
-                              orderVM.currentBurger?.toppings
-                                  ?.removeWhere((t) => t.id == topping.id);
-                            }
-                            orderVM.notifyListeners();
-                          },
-                        selectedColor: AppColors.primary, // Use primary color
-                        disabledColor: AppColors.secondary, // Use secondary color
-                        );
-                      }).toList() ??
-                      [],
+                    return FilterChip(
+                      avatar: topping.image != null
+                          ? Image.network(
+                        topping.image!,
+                        width: 50,
+                        height: 50,
+                      )
+                          : null, // Display image if available
+                      label: Text(topping.name ?? ""),
+                      selected: orderVM.currentBurger?.toppings
+                          ?.any((t) => t.id == topping.id) ??
+                          false,
+                      onSelected: (bool selected) {
+                        if (selected) {
+                          orderVM.currentBurger?.toppings?.add(topping);
+                        } else {
+                          orderVM.currentBurger?.toppings
+                              ?.removeWhere((t) => t.id == topping.id);
+                        }
+                        orderVM.notifyListeners();
+                      },
+                      selectedColor: AppColors.primary,
+                      disabledColor: AppColors.secondary,
+                    );
+                  }).toList() ?? [],
                 ),
                 SizedBox(height: 20),
 
                 // Sauces Selection (GridView)
                 Text(
-                    AppStrings.chooseSauces,
+                  AppStrings.chooseSauces,
                   style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                 ),
                 GridView.count(
@@ -121,24 +132,23 @@ class BurgerComposer extends StatelessWidget {
                   crossAxisCount: 3,
                   childAspectRatio: 3,
                   children: orderVM.ingredients?.sauces?.map((sauce) {
-                        return FilterChip(
-                          label: Text(sauce.name ?? ""),
-                          selected:
-                              orderVM.currentBurger?.sauces?.contains(sauce) ??
-                                  false,
-                          onSelected: (bool selected) {
-                            if (selected) {
-                              orderVM.currentBurger?.sauces?.add(sauce);
-                            } else {
-                              orderVM.currentBurger?.sauces?.remove(sauce);
-                            }
-                            orderVM.notifyListeners();
-                          },
-                        selectedColor: AppColors.primary, // Use primary color
-                        disabledColor: AppColors.secondary, // Use secondary color
-                        );
-                      }).toList() ??
-                      [],
+                    return FilterChip(
+                      label: Text(sauce.name ?? ""),
+                      selected:
+                      orderVM.currentBurger?.sauces?.contains(sauce) ??
+                          false,
+                      onSelected: (bool selected) {
+                        if (selected) {
+                          orderVM.currentBurger?.sauces?.add(sauce);
+                        } else {
+                          orderVM.currentBurger?.sauces?.remove(sauce);
+                        }
+                        orderVM.notifyListeners();
+                      },
+                      selectedColor: AppColors.primary,
+                      disabledColor: AppColors.secondary,
+                    );
+                  }).toList() ?? [],
                 ),
                 SizedBox(height: 20),
 
@@ -147,9 +157,9 @@ class BurgerComposer extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                        AppStrings.sauceInside,
+                      AppStrings.sauceInside,
                       style:
-                          TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                      TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                     ),
                     Switch(
                       value: orderVM.currentBurger?.sauceInside ?? false,
@@ -170,7 +180,7 @@ class BurgerComposer extends StatelessWidget {
                       orderVM.saveCurrentBurger();
                       Navigator.pop(context);
                     },
-                      child: Text(AppStrings.addToOrder),
+                    child: Text(AppStrings.addToOrder),
                   ),
                 ),
               ],
@@ -178,7 +188,6 @@ class BurgerComposer extends StatelessWidget {
           ),
         ),
       );
-      },
-    );
+    });
   }
 }

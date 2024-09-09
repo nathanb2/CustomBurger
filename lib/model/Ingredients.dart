@@ -23,9 +23,9 @@ class Ingredients{
     this.steacks?.add(Steack(id: 3, name: "300", weight: 300));
     
     this.toppings = [];
-    this.toppings?.add(Element(id:4, name:"concober"));
-    this.toppings?.add(Element(id:5, name:"tomatos"));
-    this.toppings?.add(Element(id:6, name:"mushrooms"));
+    this.toppings?.add(Element(id:4, name:"concober", image: "https://www.lipmanfamilyfarms.com/wp-content/uploads/2020/09/Cucumber-hero@2x-1024x696.png"));
+    this.toppings?.add(Element(id:5, name:"lettuce", image: 'https://www.100daysofrealfood.com/wp-content/uploads/2023/11/vecteezy_lettuce-salad-leaf-isolated-on-white-background-with_5582269-1536x1024.jpg'));
+    this.toppings?.add(Element(id:6, name:"tomatos", image: "https://ameixial.com/wp-content/uploads/2021/08/one-fresh-red-tomato-isolated-white-scaled-1.jpg"));
     this.toppings?.add(Element(id:7, name:"oignon"));
     this.toppings?.add(Element(id:8, name:"fried oignon"));
     this.toppings?.add(Element(id:9, name:"egg"));
