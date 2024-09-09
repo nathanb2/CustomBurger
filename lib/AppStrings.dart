@@ -1,0 +1,29 @@
+class AppStrings {
+  static const String appName = 'Custom Your Burger';
+  static const String welcomeMessage = 'Welcome to Custom Your Burger';
+  static const String loginButton = 'Login';
+  static const String signUpButton = 'Sign Up';
+  static const String homeTitle = 'Home';
+  static const String profileTitle = 'Profile';
+  static const String settingsTitle = 'Settings';
+  static const String errorMessage = 'Something went wrong. Please try again.';
+  static const String networkError = 'Unable to connect. Check your internet connection.';
+  static const String orderValidation = 'Order Validation';
+  static const String loggedInMessage = 'Hi, you are logged in. Just confirm your order';
+  static const String enterDetails = 'Please enter your details to validate your order.';
+  static const String phoneNumber = 'Phone Number';
+  static const String address = 'Address';
+  static const String submit = 'Submit';
+  static const String sauceInside = 'Sauce Inside';
+  static const String chooseSauces = 'Choose Sauces';
+  static const String chooseToppings = 'Choose Toppings';
+  static const String selectCookLevel = 'Select Cook Level';
+  static const String selectSteackWeight = 'Select Steack Weight';
+  static const String addToOrder = 'Add to Order';
+  static const String order = 'Order';
+  static const String validate = 'Validate';
+  static const String signIn = 'Sign In';
+  static const String password = 'Password';
+  static const String email = 'Email';
+  static const String guest = 'Guest';
+}
