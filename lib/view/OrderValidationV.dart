@@ -18,7 +18,7 @@ class OrderValidationV extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              if (orderVM.order?.userId != null)
+              if (orderVM.order?.userId != null && orderVM.order!.userId! > -1)
                 _buildLoggedInView(context, orderVM)
               else
                 _buildLoginForm(context, orderVM),

@@ -1,4 +1,5 @@
 import 'dart:math';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:your_lunch/model/Element.dart';
 import 'package:your_lunch/model/Ingredients.dart';
 import 'package:your_lunch/model/User.dart';
@@ -7,7 +8,12 @@ import '../model/Burger.dart';
 import '../model/Order.dart';
 
 class DummyDB {
-  User DUMMY_USER = User(userId: 1, firstName: "Nathan", email: "ndb994@gmail.com", password: "1234", phone: "0509808032");
+  User DUMMY_USER = User(
+      userId: 1,
+      firstName: "Nathan",
+      email: "ndb994@gmail.com",
+      password: "1234",
+      phone: "0509808032");
   Ingredients? DUMMY_INGREDIENTS;
   List<Burger>? DUMMY_BURGERS;
   Order? _order;
@@ -45,10 +51,18 @@ class DummyDB {
   // Method to clear all orders (for resetting the state)
   void resetOrder() {
     _order = null;
+    resetUser();
+  }
+
+  Future<void> resetUser() async {
+    _user = null;
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setInt('userId', -1);
   }
 
   User? signIn(SignInRequest request) {
-    if (request.email == DUMMY_USER.email && request.password == DUMMY_USER.password) {
+    if (request.email == DUMMY_USER.email &&
+        request.password == DUMMY_USER.password) {
       _user = DUMMY_USER;
       _user?.token = generateToken(10);
       return _user;
@@ -58,16 +72,21 @@ class DummyDB {
   }
 
   String generateToken(int length) {
-    const characters = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+    const characters =
+        'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
     final random = Random();
-    return List.generate(length, (index) => characters[random.nextInt(characters.length)]).join();
+    return List.generate(
+            length, (index) => characters[random.nextInt(characters.length)])
+        .join();
   }
 
   List<Burger> generateBurgers(Ingredients dummyIngredients) {
     List<Burger> burgers = [];
 
     // Check if ingredients are properly initialized
-    if (dummyIngredients.steacks == null || dummyIngredients.toppings == null || dummyIngredients.sauces == null) {
+    if (dummyIngredients.steacks == null ||
+        dummyIngredients.toppings == null ||
+        dummyIngredients.sauces == null) {
       print('Ingredients are not properly initialized.');
       return burgers;
     }
@@ -77,8 +96,12 @@ class DummyDB {
     burger1.steack = dummyIngredients.steacks![0]; // Use ! to assert non-null
     burger1.sauces = [];
     burger1.cookLevel = dummyIngredients.cookLevels?[0];
-    burger1.toppings = [dummyIngredients.toppings![0], dummyIngredients.toppings![1]]; // Use safe access
-    burger1.sauces?.addAll([dummyIngredients.sauces![0], dummyIngredients.sauces![1]]);
+    burger1.toppings = [
+      dummyIngredients.toppings![0],
+      dummyIngredients.toppings![1]
+    ]; // Use safe access
+    burger1.sauces
+        ?.addAll([dummyIngredients.sauces![0], dummyIngredients.sauces![1]]);
     burger1.sauceInside = true;
     burgers.add(burger1);
 
@@ -87,8 +110,13 @@ class DummyDB {
     burger2.steack = dummyIngredients.steacks![2];
     burger2.sauces = [];
     burger2.cookLevel = dummyIngredients.cookLevels?[1];
-    burger2.toppings = [dummyIngredients.toppings![1], dummyIngredients.toppings![2], dummyIngredients.toppings![3]];
-    burger2.sauces?.addAll([dummyIngredients.sauces![1], dummyIngredients.sauces![2]]);
+    burger2.toppings = [
+      dummyIngredients.toppings![1],
+      dummyIngredients.toppings![2],
+      dummyIngredients.toppings![3]
+    ];
+    burger2.sauces
+        ?.addAll([dummyIngredients.sauces![1], dummyIngredients.sauces![2]]);
     burger2.sauceInside = false;
     burgers.add(burger2);
 
